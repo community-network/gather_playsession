@@ -2,3 +2,5 @@
 debug.log
 .DS_Store
 .env
+gather_playsession.exe
+gather_playsession
