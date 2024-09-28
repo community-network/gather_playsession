@@ -1,0 +1,32 @@
+[package]
+name = "gather_playsession"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenvy = "0.15"
+chrono = "0.4"
+log = "0.4"
+flexi_logger = "0.29"
+diesel = { version = "2.2", features = ["postgres", "chrono"] }
+
+[dependencies.reqwest]
+version = "0.12"
+default-features = false
+features = ["rustls-tls", "json"]
+
+[dependencies.warp]
+version = "0.3"
+features = ["tls"]
+
+[dependencies.serde]
+version = "1.0"
+features = ["derive"]
+
+[dependencies.bson]
+version = "2.11"
+features = ["chrono-0_4"]
+
+[dependencies.tokio]
+version = "1.36"
+features = ["full"]

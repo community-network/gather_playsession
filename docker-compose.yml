@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgress_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=gatherer
+      - POSTGRES_USER=gatherer
+      - POSTGRES_PASSWORD=VYgr98aXPnkSCB7c6qAUmx
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gatherer"]
+      interval: "10s"
+      timeout: "5s"
+      retries: 5
+      start_period: "10s"
+  gather_playsession:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gather_playsession
+    environment:
+      - DATABASE_URL=postgres://gatherer:VYgr98aXPnkSCB7c6qAUmx@db/gatherer
+      - SERVER_ID=75a22782-850d-11eb-b244-0a58a9feac02
+      - KEEPALIVE_PORT=3030
+    depends_on:
+      - db
+    healthcheck:
+      test: curl -fk http://0.0.0.0:3030 || exit 1
+      interval: "10s"
+      timeout: "5s"
+      retries: 5
+      start_period: "10s"
+
+volumes:
+  postgress_db:
